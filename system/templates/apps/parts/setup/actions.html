@@ -7,6 +7,15 @@
         {{localize "FAx.Apps.Setup.Actions.Clear.Consequences"}}
     </span>
 
+    <span class="fatex__sheet_setup__action setup_action--clear-attributes {{#unless hasAttributes}}fatex__sheet_setup__action--disabled{{/unless}}">
+        {{localize "FAx.Apps.Setup.Actions.Clear.Attributes"}}
+    </span>
+
+    <span class="fatex__sheet_setup__action setup_action--clear-resources {{#unless hasResources}}fatex__sheet_setup__action--disabled{{/unless}}">
+        {{localize "FAx.Apps.Setup.Actions.Clear.Resources"}}
+    </span>
+
+
     <span class="fatex__sheet_setup__action setup_action--clear-skills {{#unless hasSkills}}fatex__sheet_setup__action--disabled{{/unless}}">
         {{localize "FAx.Apps.Setup.Actions.Clear.Skills"}}
     </span>

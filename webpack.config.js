@@ -60,12 +60,6 @@ module.exports = (env) => {
                         "ts-loader",
                         "webpack-import-glob-loader",
                         {
-                            loader: "eslint-loader",
-                            options: {
-                                cache: true,
-                            },
-                        },
-                        {
                             loader: "string-replace-loader",
                             options: {
                                 search: "__ALL_TEMPLATES__",

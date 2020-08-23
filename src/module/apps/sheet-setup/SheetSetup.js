@@ -4,15 +4,19 @@ const CLEAR = {
     EVERYTHING: 0,
     ASPECTS: 1,
     CONSEQUENCES: 2,
-    SKILLS: 3,
-    STRESS: 4,
+    ATTRIBUTES: 3,
+    RESOURCES: 4,
+    SKILLS: 5,
+    STRESS: 6,
 };
 
 const TYPES = {
     1: "aspect",
     2: "consequence",
-    3: "skill",
-    4: "stress",
+    3: "attribute",
+    4: "resource",
+    5: "skill",
+    6: "stress",
 };
 
 export class SheetSetup extends FormApplication {
@@ -54,6 +58,8 @@ export class SheetSetup extends FormApplication {
             isOwnedBy: this.actor ? this.actor.name : false,
 
             hasAspects: !!this.actor.items.filter((i) => i.type === "aspect").length,
+            hasAttributes: !!this.actor.items.filter((i) => i.type === "attribute").length,
+            hasResources: !!this.actor.items.filter((i) => i.type === "resource").length,
             hasSkills: !!this.actor.items.filter((i) => i.type === "skill").length,
             hasConsequences: !!this.actor.items.filter((i) => i.type === "consequence").length,
             hasStress: !!this.actor.items.filter((i) => i.type === "stress").length,
@@ -72,6 +78,8 @@ export class SheetSetup extends FormApplication {
         // Clear actions
         html.find(".setup_action--clear").click((e) => this._onClear.call(this, e, CLEAR.EVERYTHING));
         html.find(".setup_action--clear-stress").click((e) => this._onClear.call(this, e, CLEAR.STRESS));
+        html.find(".setup_action--clear-attributes").click((e) => this._onClear.call(this, e, CLEAR.ATTRIBUTES));
+        html.find(".setup_action--clear-resources").click((e) => this._onClear.call(this, e, CLEAR.RESOURCES));
         html.find(".setup_action--clear-skills").click((e) => this._onClear.call(this, e, CLEAR.SKILLS));
         html.find(".setup_action--clear-consequences").click((e) => this._onClear.call(this, e, CLEAR.CONSEQUENCES));
         html.find(".setup_action--clear-aspects").click((e) => this._onClear.call(this, e, CLEAR.ASPECTS));

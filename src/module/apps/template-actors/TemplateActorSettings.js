@@ -24,6 +24,8 @@ export class TemplateActorSettings extends FormApplication {
         filteredActors.forEach((actor) => {
             actor.stress = actor.items.filter((item) => item.type === "stress");
             actor.aspects = actor.items.filter((item) => item.type === "aspect");
+            actor.attributes = actor.items.filter((item) => item.type === "attribute");
+            actor.resources = actor.items.filter((item) => item.type === "resource");
             actor.skills = actor.items.filter((item) => item.type === "skill");
             actor.consequences = actor.items.filter((item) => item.type === "consequence");
         });

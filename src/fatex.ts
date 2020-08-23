@@ -23,6 +23,8 @@ import { AspectSheet } from "./module/item/aspect/AspectSheet";
 import { ConsequenceSheet } from "./module/item/consequence/ConsequenceSheet";
 import { ExtraSheet } from "./module/item/extra/ExtraSheet";
 import { ItemFate } from "./module/item/ItemFate";
+import { AttributeSheet } from "./module/item/attribute/AttributeSheet";
+import { ResourceSheet } from "./module/item/resource/ResourceSheet";
 import { SkillSheet } from "./module/item/skill/SkillSheet";
 import { StressSheet } from "./module/item/stress/StressSheet";
 import { StuntSheet } from "./module/item/stunt/StuntSheet";
@@ -41,7 +43,7 @@ Hooks.once("init", async () => {
 
     // Initialise config
     CONFIG.FateX = FateX;
-    CONFIG.Actor.entityClass = ActorFate;
+    CONFIG.Actor.entityClass = ActorFate as any;
     CONFIG.Item.entityClass = ItemFate;
 
     CONFIG.FateX.global.useMarkdown = !![...game.modules.values()].filter((module) => {
@@ -77,6 +79,16 @@ Hooks.once("init", async () => {
 
     Items.registerSheet("FateX", ConsequenceSheet, {
         types: ["consequence"],
+        makeDefault: true,
+    });
+
+    Items.registerSheet("FateX", AttributeSheet, {
+        types: ["attribute"],
+        makeDefault: true,
+    });
+
+    Items.registerSheet("FateX", ResourceSheet, {
+        types: ["resource"],
         makeDefault: true,
     });
 

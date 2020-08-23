@@ -36,10 +36,31 @@
 .fatex__tabs__tab--skills {
     .fatex__tabs__tab__content {
         display: flex;
+        flex-wrap: wrap;
+
+        .fatex__attributes {
+            min-width: 220px;
+            flex-grow: 1;
+        }
+
+        .fatex__attributes--columns {
+            min-width: 360px;
+        }
+
+        .fatex__resources {
+            min-width: 220px;
+            flex-grow: 1;
+            padding-left: $component-padding;
+        }
+
+        .fatex__resources--columns {
+            min-width: 360px;
+        }
 
         .fatex__skills {
             min-width: 220px;
-            width: 40%;
+            flex-grow: 1;
+            padding-left: $component-padding;
         }
 
         .fatex__skills--columns {

@@ -1,0 +1,38 @@
+<div class="fatex__resources{{#if options.enableResourceColumns}} fatex__resources--columns{{/if}}">
+    <h2 class="fatex__resources__headline">
+        <span>{{localize "FAx.Sheet.Resources"}}</span>
+
+        <div class="fatex__item__actions">
+            <span class="fatex__item__add fatex__resource__add"></span>
+        </div>
+    </h2>
+
+    <div class="fatex__resources__columns">
+        {{#each resources as |resource resourceIndex|}}
+            <div class="fatex__resource fatex__input fatex__input--icon fatex__sortable item" data-item-id="{{resource._id}}">
+
+                <div class="fatex__resource__actions_wrapper">
+                    <div class="fatex__resource__input fatex__headline">{{resource.name}}</div>
+
+                    {{#unless resource.data.isNeutral}}
+                        <label
+                            class="fatex__resource__icon fatex__input__icon{{#if resource.data.isNegative}} fatex__resource__icon--negative{{/if}}">
+                            {{#if resource.data.isPositive}}+{{/if}}{{resource.data.rank}}
+                        </label>
+                    {{/unless}}
+
+                    <div class="fatex__resource__secondary__actions">
+                        <span class="fatex__resource__increment" data-item="{{resource._id}}">+</span>
+                        <span class="fatex__resource__decrement" data-item="{{resource._id}}">-</span>
+                    </div>
+
+                    <div class="fatex__resource__actions">
+                        <span class="fatex__resource__sort fatex__item__sort"></span>
+                        <span class="fatex__resource__settings fatex__item__settings" data-item="{{resource._id}}"></span>
+                        <span class="fatex__resource__delete fatex__item__delete" data-item="{{resource._id}}"></span>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>

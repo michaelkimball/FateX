@@ -87,6 +87,8 @@ export class ActorSheetFate extends ActorSheet {
         // Add filtered item lists for easier access
         data.stress = data.items.filter((item) => item.type === "stress");
         data.aspects = data.items.filter((item) => item.type === "aspect");
+        data.attributes = data.items.filter((item) => item.type === 'attribute');
+        data.resources = data.items.filter((item) => item.type === 'resource');
         data.skills = data.items.filter((item) => item.type === "skill");
         data.stunts = data.items.filter((item) => item.type === "stunt");
         data.extras = data.items.filter((item) => item.type === "extra");

@@ -73,6 +73,7 @@ export class ConsequenceItem extends BaseItem {
      *************************/
 
     static getDisabledState(item) {
+        // TODO: Add attributes
         let disabled = false;
         const skillReferences = Automation.getSkillReferences(item);
         const conjunction = Automation.getReferenceSetting(item, "conjunction", CONJUNCTIONS.OR);

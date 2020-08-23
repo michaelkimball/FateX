@@ -77,6 +77,34 @@ export class ActorFate extends Actor {
         return super.visible;
     }
 
+    async roll(name){
+        let item = this.items.filter(item => item.data.name === name)[0];
+        let itemType = item.type;
+        const rollable = CONFIG.FateX.itemTypes[itemType].prepareItemData(duplicate(item), item);
+        const template = `systems/fatex/templates/chat/roll-${itemType}.html`;
+        const rank = parseInt(rollable.data.rank) || 0;
+        const roll = new Roll("4dF").roll();
+        game.dice3d.showForRoll(roll);
+        const dice = CONFIG.FateX.itemTypes[itemType].getDice(roll);
+        const total = CONFIG.FateX.itemTypes[itemType].getTotalString(roll.total + rank);
+        const ladder = CONFIG.FateX.itemTypes[itemType].getLadderLabel(roll.total + rank);
+
+        let templateData = { rank, dice, total, ladder };
+        templateData[itemType] = rollable;
+
+        let chatData = {
+            user: game.user._id,
+            speaker: ChatMessage.getSpeaker({ actor: this }),
+            sound: CONFIG.sounds.dice,
+            flags: {
+                templateVariables: templateData,
+            },
+        };
+
+        chatData.content = await renderTemplate(template, templateData);
+        await ChatMessage.create(chatData);
+    }
+
     /**
      * Re-prepare the data for all owned items when owned items are deleted.
      * This ensures, that items that reference the deleted item get updated.

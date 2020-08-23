@@ -15,6 +15,7 @@ export const CONJUNCTIONS = {
 };
 
 export class Automation extends BaseComponent {
+    // TODO: Add attributes
     static activateListeners(html, sheet) {
         html.find(".fatex__skill__reference__create").on("click", (e) => this._onAddReference.call(this, e, sheet));
         html.find(".fatex__skill__reference__change").on("change", (e) => this._onChangeReference.call(this, e, sheet));

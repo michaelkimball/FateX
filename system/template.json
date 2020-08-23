@@ -19,6 +19,8 @@
             "stress",
             "aspect",
             "consequence",
+            "attribute",
+            "resource",
             "skill",
             "stunt",
             "extra"
@@ -55,6 +57,18 @@
             "icon": "",
             "type": 0,
             "active": false
+        },
+        "attribute": {
+            "templates": [
+                "base"
+            ],
+            "rank": 0
+        },
+        "resource": {
+            "templates": [
+                "base"
+            ],
+            "rank": 0
         },
         "skill": {
             "templates": [

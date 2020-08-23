@@ -34,6 +34,8 @@
             "FatePoints": "Fate Points",
             "Aspects": "Aspects",
             "Consequences": "Consequences",
+            "Attributes": "Attributes",
+            "Resources": "Resources",
             "Skills": "Skills",
             "Stunts": "Stunts",
             "Extras": "Extras",
@@ -161,6 +163,8 @@
                     "Clear": {
                         "Aspects": "Clear aspects",
                         "Consequences": "Clear consequences",
+                        "Attributes": "Clear attributes",
+                        "Resources": "Clear resources",
                         "Skills": "Clear skills",
                         "Stress": "Clear stress tracks",
                         "Everything": "Clear everything"

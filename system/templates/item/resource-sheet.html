@@ -1,0 +1,29 @@
+{{> "systems/fatex/templates/item/parts/layout/item-header.html" title="FAx.Item.Resource.EditItem" item=item}}
+
+<div class="fatex__settings">
+    {{> "systems/fatex/templates/item/parts/settings/setting-input.html"
+        headline = "FAx.Item.Resource.Name"
+        field = item.name
+        fieldName = "name"
+        placeholder = "FAx.Item.Resource.Name"
+    }}
+
+    {{> "systems/fatex/templates/item/parts/settings/setting-rank.html"
+        headline = "FAx.Item.Resource.Rank"
+        fieldName = "data.rank"
+        field = data.rank
+        dtype = "Number"
+        radioItems = availableRanks
+    }}
+
+    {{!--Description is disabled for now--}}
+    {{!--{{> "systems/fatex/templates/item/parts/settings/setting-input.html"
+        headline = "FAx.Item.Resource.Description"
+        help = "FAx.Item.Resource.DescriptionHelp"
+        fieldName = "data.description"
+        field = data.description
+    }}--}}
+</div>
+
+{{> "systems/fatex/templates/item/parts/layout/item-footer.html"}}
+

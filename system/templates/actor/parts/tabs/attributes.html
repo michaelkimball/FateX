@@ -1,0 +1,38 @@
+<div class="fatex__attributes{{#if options.enableAttributeColumns}} fatex__attributes--columns{{/if}}">
+    <h2 class="fatex__attributes__headline">
+        <span>{{localize "FAx.Sheet.Attributes"}}</span>
+
+        <div class="fatex__item__actions">
+            <span class="fatex__item__add fatex__attribute__add"></span>
+        </div>
+    </h2>
+
+    <div class="fatex__attributes__columns">
+        {{#each attributes as |attribute attributeIndex|}}
+            <div class="fatex__attribute fatex__input fatex__input--icon fatex__sortable item" data-item-id="{{attribute._id}}">
+
+                <div class="fatex__attribute__actions_wrapper">
+                    <div class="fatex__attribute__input fatex__headline">{{attribute.name}}</div>
+
+                    {{#unless attribute.data.isNeutral}}
+                        <label
+                            class="fatex__attribute__icon fatex__input__icon{{#if attribute.data.isNegative}} fatex__attribute__icon--negative{{/if}}">
+                            {{#if attribute.data.isPositive}}+{{/if}}{{attribute.data.rank}}
+                        </label>
+                    {{/unless}}
+
+                    <div class="fatex__attribute__secondary__actions">
+                        <span class="fatex__attribute__increment" data-item="{{attribute._id}}">+</span>
+                        <span class="fatex__attribute__decrement" data-item="{{attribute._id}}">-</span>
+                    </div>
+
+                    <div class="fatex__attribute__actions">
+                        <span class="fatex__attribute__sort fatex__item__sort"></span>
+                        <span class="fatex__attribute__settings fatex__item__settings" data-item="{{attribute._id}}"></span>
+                        <span class="fatex__attribute__delete fatex__item__delete" data-item="{{attribute._id}}"></span>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
