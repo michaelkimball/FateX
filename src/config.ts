@@ -62,6 +62,7 @@ export const FateX: FatexConfig = {
     applications: {
         templateSettings: null,
         templatePicker: null,
+        actorGroups: null,
     },
     global: {
         useMarkdown: false,

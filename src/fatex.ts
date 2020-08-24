@@ -27,11 +27,13 @@ import { SkillSheet } from "./module/item/skill/SkillSheet";
 import { StressSheet } from "./module/item/stress/StressSheet";
 import { StuntSheet } from "./module/item/stunt/StuntSheet";
 import { TemplateActors } from "./module/apps/template-actors/TemplateActors";
+import { ActorGroups } from "./module/apps/actor-groups/ActorGroups";
 
 /* -------------------------------- */
 /*	Register hooks      			*/
 /* -------------------------------- */
 TemplateActors.hooks();
+ActorGroups.hooks();
 
 /* -------------------------------- */
 /*	System initialization			*/
