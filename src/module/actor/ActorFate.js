@@ -77,19 +77,24 @@ export class ActorFate extends Actor {
         return super.visible;
     }
 
-    async roll(name){
+    async roll(name, modifier){
         let item = this.items.filter(item => item.data.name === name)[0];
         let itemType = item.type;
         const rollable = CONFIG.FateX.itemTypes[itemType].prepareItemData(duplicate(item), item);
         const template = `systems/fatex/templates/chat/roll-${itemType}.html`;
         const rank = parseInt(rollable.data.rank) || 0;
-        const roll = new Roll("4dF").roll();
+        let roll;
+        if(modifier){
+            roll = new Roll("4dF + @mod", { mod: modifier }).roll();
+        } else {
+            roll = new Roll("4dF").roll();
+        }
         game.dice3d.showForRoll(roll);
         const dice = CONFIG.FateX.itemTypes[itemType].getDice(roll);
         const total = CONFIG.FateX.itemTypes[itemType].getTotalString(roll.total + rank);
         const ladder = CONFIG.FateX.itemTypes[itemType].getLadderLabel(roll.total + rank);
 
-        let templateData = { rank, dice, total, ladder };
+        let templateData = { rank: (rank + modifier), dice, total, ladder };
         templateData[itemType] = rollable;
 
         let chatData = {
