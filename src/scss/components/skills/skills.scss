@@ -3,7 +3,10 @@
 
 .fatex__skills--columns {
     .fatex__skills__columns {
-        column-count: 2;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-auto-flow: column;
+        grid-column-gap: $component-padding * 2;
     }
 }
 
@@ -17,6 +20,10 @@
     padding: $component-padding $component-padding / 2;
     cursor: pointer;
     display: inline-block;
+
+    .fatex__helper--enable-editmode & {
+        cursor: default;
+    }
 }
 
 .fatex__skill--filler {

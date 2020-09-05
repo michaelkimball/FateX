@@ -1,6 +1,8 @@
 import { TemplateActorPicker } from "./TemplateActorPicker";
 import { TemplateActorSettings } from "./TemplateActorSettings";
 
+declare class Settings extends SidebarTab {}
+
 export class TemplateActors {
     static hooks() {
         Hooks.once("ready", async () => {

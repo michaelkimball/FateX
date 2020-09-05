@@ -29,7 +29,7 @@ export class Automation extends BaseComponent {
         sheetData.availableSkillLevels = this.getAvailableSkillLevels();
         sheetData.availableOperators = this.getAvailableOperators();
         sheetData.availableConjunctions = this.getAvailableConjunctions();
-        sheetData.availableSkills = this.getAllAvailableSkills(sheet.actor);
+        sheetData.availableSkills = this.getAllAvailableSkills();
 
         return sheetData;
     }
@@ -103,7 +103,7 @@ export class Automation extends BaseComponent {
         new Dialog(
             {
                 title: game.i18n.localize("FAx.Dialog.ReferenceRemove"),
-                content: game.i18n.format("FAx.Dialog.ReferenceRemoveText"),
+                content: game.i18n.localize("FAx.Dialog.ReferenceRemoveText"),
                 default: "submit",
                 buttons: {
                     cancel: {
@@ -196,7 +196,7 @@ export class Automation extends BaseComponent {
         return entity.getFlag("fatex", "skillReferences") || [];
     }
 
-    static getAllAvailableSkills(actor, sort = true) {
+    static getAllAvailableSkills(sort = true) {
         // Get all actors skills in a unique list of names
         const skills = [
             ...new Set(
@@ -206,7 +206,9 @@ export class Automation extends BaseComponent {
 
         // Sort alphabetically
         if (sort) {
-            skills.sort((a, b) => b - a);
+            skills.sort(function (a, b) {
+                return a.toLowerCase().localeCompare(b.toLowerCase());
+            });
         }
 
         return skills;
@@ -272,5 +274,33 @@ export class Automation extends BaseComponent {
         return {
             conjunction: this.getReferenceSetting(entity, "conjunction", CONJUNCTIONS.OR),
         };
+    }
+
+    static getDisabledState(item) {
+        let disabled = false;
+        const skillReferences = Automation.getSkillReferences(item);
+        const conjunction = Automation.getReferenceSetting(item, "conjunction", CONJUNCTIONS.OR);
+
+        // Disable by default if automation was enabled
+        if (conjunction === CONJUNCTIONS.OR && skillReferences.length) {
+            disabled = true;
+        }
+
+        // Not disabled if one of the skillReferences conditions is met
+        for (const reference of skillReferences) {
+            const skill = Automation.getActorSkillByName(item.actor, reference.skill);
+            const isConditionMet =
+                skill === undefined ? false : Automation.checkSkillCondition(skill, reference.condition, reference.operator);
+
+            if (conjunction === CONJUNCTIONS.OR && isConditionMet) {
+                return false;
+            }
+
+            if (conjunction === CONJUNCTIONS.AND && !isConditionMet) {
+                return true;
+            }
+        }
+
+        return disabled;
     }
 }

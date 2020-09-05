@@ -28,12 +28,12 @@ export class AttributeItem extends BaseItem {
         return sheetData;
     }
 
-    static prepareItemData(item) {
-        item.data.isNegative = item.data.rank < 0;
-        item.data.isPositive = item.data.rank >= 0;
-        item.data.isNeutral = item.data.rank === 0;
+    static prepareItemData(data, _item) {
+        data.data.isNegative = data.data.rank < 0;
+        data.data.isPositive = data.data.rank >= 0;
+        data.data.isNeutral = data.data.rank === 0;
 
-        return item;
+        return data;
     }
 
     /**
@@ -99,15 +99,16 @@ export class AttributeItem extends BaseItem {
         const ladder = this.getLadderLabel(roll.total + rank);
 
         // Prepare attribute item
-        let templateData = { attribute: attribute, rank, dice, total, ladder };
+        const templateData = { attribute: attribute, rank, dice, total, ladder };
 
-        let chatData = {
+        const chatData = {
             user: game.user._id,
             speaker: ChatMessage.getSpeaker({ actor: actor }),
             sound: CONFIG.sounds.dice,
             flags: {
                 templateVariables: templateData,
             },
+            content: {}
         };
         console.log(chatData);
         chatData.content = await renderTemplate(template, templateData);
@@ -115,28 +116,13 @@ export class AttributeItem extends BaseItem {
     }
 
     static getDice(roll) {
-        const dice = [];
         const useOldRollApi = isNewerVersion("0.7.0", game.data.version);
+        const rolls = useOldRollApi ? roll.parts[0].rolls : roll.terms[0].results;
 
-        if (useOldRollApi) {
-            roll.parts[0].rolls.forEach((rolledDie) => {
-                const die = {};
-                die.value = rolledDie.roll;
-                die.face = this.getDieFace(rolledDie.roll);
-
-                dice.push(die);
-            });
-        } else {
-            roll.terms[0].results.forEach((rolledDie) => {
-                const die = {};
-                die.value = rolledDie.result;
-                die.face = this.getDieFace(rolledDie.result);
-
-                dice.push(die);
-            });
-        }
-
-        return dice;
+        return rolls.map((rolledDie) => ({
+            value: rolledDie.roll,
+            face: this.getDieFace(rolledDie.roll),
+        }));
     }
 
     static getDieFace(die) {

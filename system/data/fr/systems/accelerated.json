@@ -1,81 +1,81 @@
 {
-    "name": "Accelerated",
+    "name": "Accéléré",
     "identifier": "fae",
     "types": {
         "Aspects": [
             {
-                "label": "Basic",
+                "label": "Basique",
                 "entries": [
                     {
-                        "name": "High Concept",
+                        "name": "Concept",
                         "type": "aspect",
                         "data": {
-                            "label": "High Concept"
+                            "label": "Concept"
                         }
                     },
                     {
-                        "name": "Trouble",
+                        "name": "Problème",
                         "type": "aspect",
                         "data": {
-                            "label": "Trouble"
+                            "label": "Problème"
                         }
                     },
                     {
-                        "name": "Other aspect",
+                        "name": "Autre aspect",
                         "type": "aspect",
                         "data": {
-                            "label": "Other"
+                            "label": "Autre"
                         }
                     },
                     {
-                        "name": "Other aspect",
+                        "name": "Autre aspect",
                         "type": "aspect",
                         "data": {
-                            "label": "Other"
+                            "label": "Autre"
                         }
                     },
                     {
-                        "name": "Other aspect",
+                        "name": "Autre aspect",
                         "type": "aspect",
                         "data": {
-                            "label": "Other"
+                            "label": "Autre"
                         }
                     }
                 ]
             },
             {
-                "label": "Optional",
+                "label": "Option",
                 "entries": [
                     {
-                        "name": "Relationship",
+                        "name": "Parenté",
                         "type": "aspect",
                         "data": {
-                            "label": "Relationship"
+                            "label": "Parenté"
                         }
                     },
                     {
-                        "name": "Empty Aspect",
+                        "name": "Autre Aspect",
                         "type": "aspect"
                     }
                 ]
             }
         ],
-        "Consequences": [
+        "Conséquences": [
             {
                 "entries": [
                     {
-                        "name": "Mild consequence",
+                        "name": "Conséquence Légère",
                         "type": "consequence",
                         "data": {
-                            "label": "Mild",
+                            "label": "Légère",
                             "icon": "2"
                         }
                     },
                     {
-                        "name": "2nd Mild consequence (Skill condition)",
+                        "name": "2ème conséquence Légère (Lié à une Compétence)",
                         "type": "consequence",
                         "data": {
-                            "label": "Mild",
+                            "label": "Légère",
                             "icon": "2"
                         },
                         "flags": {
@@ -90,7 +90,7 @@
                                         "operator": 4
                                     },
                                     {
-                                        "skill": "Will",
+                                        "skill": "Volonté",
                                         "condition": 4,
                                         "operator": 4
                                     }
@@ -99,7 +99,7 @@
                         }
                     },
                     {
-                        "name": "Moderate consequence",
+                        "name": "Conséquence Modérée",
                         "type": "consequence",
                         "data": {
                             "label": "Moderate",
@@ -107,42 +107,42 @@
                         }
                     },
                     {
-                        "name": "Severe consequence",
+                        "name": "Consequence Grave",
                         "type": "consequence",
                         "data": {
-                            "label": "Severe",
+                            "label": "Grave",
                             "icon": "6"
                         }
                     }
                 ]
             }
         ],
-        "Skills": [
+        "Compétences": [
             {
                 "columns": true,
                 "entries": [
                     {
-                        "name": "Careful",
+                        "name": "Soigneux",
                         "type": "skill"
                     },
                     {
-                        "name": "Clever",
+                        "name": "Astucieux",
                         "type": "skill"
                     },
                     {
-                        "name": "Flashy",
+                        "name": "Flamboyant",
                         "type": "skill"
                     },
                     {
-                        "name": "Forceful",
+                        "name": "Puissant",
                         "type": "skill"
                     },
                     {
-                        "name": "Quick",
+                        "name": "Rapide",
                         "type": "skill"
                     },
                     {
-                        "name": "Sneaky",
+                        "name": "Sournois",
                         "type": "skill"
                     }
                 ]

@@ -1,3 +1,4 @@
+/**
 export class CompendiumImport {
     static async importCompendium(name) {
         const pack = game.packs.find((p) => p.collection === `fatex.fate-${name}`);
@@ -31,3 +32,4 @@ export class CompendiumImport {
         }
     }
 }
+*/

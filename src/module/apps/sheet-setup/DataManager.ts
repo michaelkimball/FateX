@@ -21,7 +21,7 @@ export class DataManager {
     }
 
     async fetchSystemByName(lang, systemName) {
-        let response = await fetch(`systems/fatex/data/${lang}/systems/${systemName}.json`);
+        const response = await fetch(`systems/fatex/data/${lang}/systems/${systemName}.json`);
         return response.status === 200 ? await response.json() : {};
     }
 }

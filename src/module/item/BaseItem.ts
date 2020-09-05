@@ -1,14 +1,12 @@
-export class BaseItem {
-    static get entityName() {
-        return false;
-    }
+export abstract class BaseItem {
+    static entityName = "";
 
     /**
      * Allows each item to prepare its data before its rendered.
      * This can be used to add additional information right before rendering.
      */
-    static prepareItemData(item) {
-        return item;
+    static prepareItemData(itemData, _itemEntity) {
+        return itemData;
     }
 
     /**
@@ -17,9 +15,7 @@ export class BaseItem {
      */
     static activateActorSheetListeners(html, sheet) {
         if (!this.entityName) {
-            throw new Error(
-                "A subclass of the BaseItem must provide an entityName field or implement their own _onItemAdd() method."
-            );
+            throw new Error("A subclass of the BaseItem must provide an entityName field or implement their own _onItemAdd() method.");
         }
 
         // Default listeners for adding, configuring and deleting embedded items
@@ -31,21 +27,23 @@ export class BaseItem {
     /**
      * Allows each item to add data to its own sheet.
      */
-    static getSheetData(sheetData) {
+    static getSheetData(sheetData, _item) {
         return sheetData;
     }
 
     /**
      * Allows each item to add data to its owners actorsheet.
      */
-    static getActorSheetData(sheetData) {
+    static getActorSheetData(sheetData, _actor) {
         return sheetData;
     }
 
     /**
      * Allows each item to add listeners to its sheet
      */
-    static activateListeners() {}
+    static activateListeners(_html, _item) {
+        // Do nothing by default
+    }
 
     /*************************
      * EVENT HANDLER
@@ -59,9 +57,7 @@ export class BaseItem {
         e.stopPropagation();
 
         if (!this.entityName) {
-            throw new Error(
-                "A subclass of the BaseItem must provide an entityName field or implement their own _onItemAdd() method."
-            );
+            throw new Error("A subclass of the BaseItem must provide an entityName field or implement their own _onItemAdd() method.");
         }
 
         const itemData = {
@@ -99,8 +95,8 @@ export class BaseItem {
 
         new Dialog(
             {
-                title: `${game.i18n.format("FAx.Dialog.EntityDelete")} ${item.name}`,
-                content: game.i18n.format("FAx.Dialog.EntityDeleteText"),
+                title: `${game.i18n.localize("FAx.Dialog.EntityDelete")} ${item.name}`,
+                content: game.i18n.localize("FAx.Dialog.EntityDeleteText"),
                 default: "submit",
                 buttons: {
                     cancel: {
@@ -149,5 +145,11 @@ export class BaseItem {
      */
     static get defaultName() {
         return this.entityName.charAt(0).toUpperCase() + this.entityName.slice(1);
+    }
+
+    protected static isEditMode(e): boolean {
+        const element = jQuery(e.currentTarget);
+
+        return !!element.closest(".fatex__helper--enable-editmode").length;
     }
 }

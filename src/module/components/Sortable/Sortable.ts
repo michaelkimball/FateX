@@ -13,7 +13,7 @@ export class Sortable extends BaseComponent {
      */
     static activateListeners(html, sheet) {
         // We have to use standard event listeners here, because Items _onDrop() does not support jQuery events.
-        html.find(".fatex__sortable").each((i, sortable) => {
+        html.find(".fatex__sortable").each((_i, sortable) => {
             sortable.addEventListener("dragstart", (e) => sheet._onDragStart.call(sheet, e), false);
         });
 

@@ -14,6 +14,10 @@ export class ActorSheetFate extends ActorSheet {
     static get defaultOptions() {
         const options = super.defaultOptions;
 
+        if (!options.classes) {
+            options.classes = [];
+        }
+
         mergeObject(options, {
             classes: options.classes.concat(["fatex fatex__sheet"]),
             template: "",
@@ -25,7 +29,7 @@ export class ActorSheetFate extends ActorSheet {
                 },
             ],
             scrollY: [".desk__content"],
-            width: 860,
+            width: 900,
         });
 
         return options;
@@ -50,12 +54,12 @@ export class ActorSheetFate extends ActorSheet {
         super.activateListeners(html);
 
         // Custom sheet listeners for every ItemType
-        for (let itemType in CONFIG.FateX.itemTypes) {
-            CONFIG.FateX.itemTypes[itemType].activateActorSheetListeners(html, this);
+        for (const itemType in CONFIG.FateX.itemClasses) {
+            CONFIG.FateX.itemClasses[itemType].activateActorSheetListeners(html, this);
         }
 
         // Custom sheet listeners for every SheetComponent
-        for (let sheetComponent in CONFIG.FateX.sheetComponents.actor) {
+        for (const sheetComponent in CONFIG.FateX.sheetComponents.actor) {
             CONFIG.FateX.sheetComponents.actor[sheetComponent].activateListeners(html, this);
         }
     }
@@ -70,7 +74,8 @@ export class ActorSheetFate extends ActorSheet {
      */
     getData() {
         // Basic fields and flags
-        let data = {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let data: any = {
             owner: this.actor.owner,
             options: this.options,
             editable: this.isEditable,
@@ -95,8 +100,8 @@ export class ActorSheetFate extends ActorSheet {
         data.consequences = data.items.filter((item) => item.type === "consequence");
 
         // Allow every itemtype to add data to the actorsheet
-        for (let itemType in CONFIG.FateX.itemTypes) {
-            data = CONFIG.FateX.itemTypes[itemType].getActorSheetData(data, this);
+        for (const itemType in CONFIG.FateX.itemClasses) {
+            data = CONFIG.FateX.itemClasses[itemType].getActorSheetData(data, this);
         }
 
         return data;
@@ -158,7 +163,7 @@ export class ActorSheetFate extends ActorSheet {
     _onOpenSheetSetup(e) {
         e.preventDefault();
 
-        const sheetSetup = new SheetSetup(this.actor);
+        const sheetSetup = new SheetSetup(this.actor, {});
         sheetSetup.render(true);
     }
 }

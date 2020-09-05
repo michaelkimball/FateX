@@ -24,22 +24,23 @@ export class SkillItem extends BaseItem {
     static getActorSheetData(sheetData) {
         // Render skill in two columns if necessary
         sheetData.options.enableSkillColumns = sheetData.skills.length >= 8;
+        sheetData.options.numberRows = Math.ceil(sheetData.skills.length / 2);
 
         return sheetData;
     }
 
-    static prepareItemData(item) {
-        item.data.isNegative = item.data.rank < 0;
-        item.data.isPositive = item.data.rank >= 0;
-        item.data.isNeutral = item.data.rank === 0;
+    static prepareItemData(data, _item) {
+        data.data.isNegative = data.data.rank < 0;
+        data.data.isPositive = data.data.rank >= 0;
+        data.data.isNeutral = data.data.rank === 0;
 
-        return item;
+        return data;
     }
 
     /**
      * Add a list of available ranks to the sheet
      */
-    static getSheetData(sheetData) {
+    static getSheetData(sheetData, _item) {
         sheetData.availableRanks = [];
 
         for (let i = 0; i <= 9; i++) {
@@ -53,7 +54,7 @@ export class SkillItem extends BaseItem {
      * EVENT HANDLER
      *************************/
 
-    static _onSkillChangeRank(e, sheet, doIncrement) {
+    static async _onSkillChangeRank(e, sheet, doIncrement) {
         e.preventDefault();
         e.stopPropagation();
 
@@ -62,7 +63,7 @@ export class SkillItem extends BaseItem {
 
         if (skill) {
             const rank = skill.data.data.rank;
-            let newRank = 0;
+            let newRank;
 
             if (doIncrement) {
                 newRank = rank >= 9 ? 9 : rank + 1;
@@ -70,20 +71,27 @@ export class SkillItem extends BaseItem {
                 newRank = rank <= -9 ? -9 : rank - 1;
             }
 
-            skill.update({
-                "data.rank": newRank,
-            });
+            await skill.update(
+                {
+                    "data.rank": newRank,
+                },
+                {}
+            );
         }
     }
 
-    static _onRollSkill(e, sheet) {
+    static async _onRollSkill(e, sheet) {
         e.preventDefault();
+
+        if (this.isEditMode(e)) {
+            return;
+        }
 
         const dataset = e.currentTarget.dataset;
         const skill = sheet.actor.getOwnedItem(dataset.itemId);
 
         if (skill) {
-            this.rollSkill(sheet, skill);
+            await this.rollSkill(sheet, skill);
         }
     }
 
@@ -99,9 +107,17 @@ export class SkillItem extends BaseItem {
         const ladder = this.getLadderLabel(roll.total + rank);
 
         // Prepare skill item
-        let templateData = { skill, rank, dice, total, ladder };
+        const templateData = { skill, rank, dice, total, ladder };
 
-        let chatData = {
+        const chatData: {
+            user: string;
+            speaker: unknown;
+            sound: string;
+            flags: {
+                templateVariables: unknown;
+            };
+            content?: HTMLElement;
+        } = {
             user: game.user._id,
             speaker: ChatMessage.getSpeaker({ actor: actor }),
             sound: CONFIG.sounds.dice,
@@ -115,28 +131,13 @@ export class SkillItem extends BaseItem {
     }
 
     static getDice(roll) {
-        const dice = [];
         const useOldRollApi = isNewerVersion("0.7.0", game.data.version);
+        const rolls = useOldRollApi ? roll.parts[0].rolls : roll.terms[0].results;
 
-        if (useOldRollApi) {
-            roll.parts[0].rolls.forEach((rolledDie) => {
-                const die = {};
-                die.value = rolledDie.roll;
-                die.face = this.getDieFace(rolledDie.roll);
-
-                dice.push(die);
-            });
-        } else {
-            roll.terms[0].results.forEach((rolledDie) => {
-                const die = {};
-                die.value = rolledDie.result;
-                die.face = this.getDieFace(rolledDie.result);
-
-                dice.push(die);
-            });
-        }
-
-        return dice;
+        return rolls.map((rolledDie) => ({
+            value: rolledDie.roll,
+            face: this.getDieFace(rolledDie.roll),
+        }));
     }
 
     static getDieFace(die) {

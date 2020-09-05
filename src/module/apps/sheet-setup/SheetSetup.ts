@@ -33,6 +33,10 @@ export class SheetSetup extends FormApplication {
     static get defaultOptions() {
         const options = super.defaultOptions;
 
+        if (!options.classes) {
+            options.classes = [];
+        }
+
         mergeObject(options, {
             title: game.i18n.localize("FAx.Apps.Setup.Title"),
             template: "/systems/fatex/templates/apps/sheet-setup.html",
@@ -53,7 +57,8 @@ export class SheetSetup extends FormApplication {
     }
 
     async getData() {
-        const data = {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const data: any = {
             options: this.options,
             isOwnedBy: this.actor ? this.actor.name : false,
 
@@ -105,6 +110,10 @@ export class SheetSetup extends FormApplication {
         }
 
         const itemData = entries.toArray().map((item) => {
+            if (!item.dataset.entity) {
+                return {};
+            }
+
             return JSON.parse(item.dataset.entity);
         });
 
@@ -133,7 +142,7 @@ export class SheetSetup extends FormApplication {
         new Dialog(
             {
                 title: game.i18n.localize("FAx.Dialog.ActorClear"),
-                content: game.i18n.format("FAx.Dialog.ActorClearText"),
+                content: game.i18n.localize("FAx.Dialog.ActorClearText"),
                 default: "cancel",
                 buttons: {
                     cancel: {
@@ -169,5 +178,7 @@ export class SheetSetup extends FormApplication {
         this.render(true);
     }
 
-    async _updateObject() {}
+    async _updateObject() {
+        // No update necessary.
+    }
 }

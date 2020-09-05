@@ -1,5 +1,10 @@
 name: FateX CI
-on: [push]
+
+on: 
+  push:
+    tags:
+    - '0.*'
+    - '1.*'
 
 jobs:
   build:
@@ -24,10 +29,6 @@ jobs:
         id: create_versioned_release
         uses: ncipollo/release-action@v1
         with:
-          allowUpdates: true
           name: ${{ steps.get-version.outputs.version }}
-          draft: false
-          prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: './system/system.json,./fatex.zip'
-          tag: ${{ steps.get-version.outputs.version }}

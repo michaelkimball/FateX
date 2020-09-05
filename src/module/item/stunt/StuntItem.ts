@@ -2,9 +2,7 @@ import { BaseItem } from "../BaseItem";
 import * as marked from "marked";
 
 export class StuntItem extends BaseItem {
-    static get entityName() {
-        return "stunt";
-    }
+    static entityName = "stunt";
 
     static getActorSheetData(sheetData) {
         if (CONFIG.FateX.global.useMarkdown) {
@@ -19,7 +17,6 @@ export class StuntItem extends BaseItem {
     static activateActorSheetListeners(html, sheet) {
         super.activateActorSheetListeners(html, sheet);
 
-        // Check or uncheck a single box
         html.find(".fatex__item__collapse").click((e) => this._onCollapseToggle.call(this, e, sheet));
     }
 
@@ -34,9 +31,12 @@ export class StuntItem extends BaseItem {
         const item = sheet.actor.getOwnedItem(dataset.item);
 
         if (item) {
-            await item.update({
-                "data.collapsed": !item.data.data.collapsed,
-            });
+            await item.update(
+                {
+                    "data.collapsed": !item.data.data.collapsed,
+                },
+                {}
+            );
         }
     }
 }

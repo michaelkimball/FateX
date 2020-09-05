@@ -5,6 +5,10 @@ export class TemplateActorSettings extends FormApplication {
     static get defaultOptions() {
         const options = super.defaultOptions;
 
+        if (!options.classes) {
+            options.classes = [];
+        }
+
         mergeObject(options, {
             title: game.i18n.localize("FAx.Settings.Templates.App.Title"),
             template: "/systems/fatex/templates/apps/template-actors.html",
@@ -19,7 +23,7 @@ export class TemplateActorSettings extends FormApplication {
     }
 
     getData() {
-        let filteredActors = duplicate(game.actors.filter((actor) => actor.isTemplateActor));
+        const filteredActors = duplicate(game.actors.filter((actor) => actor.isTemplateActor));
 
         filteredActors.forEach((actor) => {
             actor.stress = actor.items.filter((item) => item.type === "stress");
@@ -76,8 +80,8 @@ export class TemplateActorSettings extends FormApplication {
 
         new Dialog(
             {
-                title: `${game.i18n.format("FAx.Dialog.EntityDelete")} ${template.name}`,
-                content: game.i18n.format("FAx.Dialog.EntityDeleteText"),
+                title: `${game.i18n.localize("FAx.Dialog.EntityDelete")} ${template.name}`,
+                content: game.i18n.localize("FAx.Dialog.EntityDeleteText"),
                 default: "submit",
                 buttons: {
                     cancel: {
@@ -120,7 +124,7 @@ export class TemplateActorSettings extends FormApplication {
         const newTemplateActor = await ActorFate._create(createData, { renderSheet: true });
 
         // Open sheet setup by default for new templates
-        const sheetSetup = new SheetSetup(newTemplateActor);
+        const sheetSetup = new SheetSetup(newTemplateActor, {});
         sheetSetup.render(true);
 
         // Re-render this settings window and the picker if open
@@ -140,9 +144,11 @@ export class TemplateActorSettings extends FormApplication {
         }
 
         // Delete id
+        //@ts-ignore
         delete template._id;
 
         // Change name
+        //@ts-ignore
         template.name = template.name + ` (${game.i18n.localize("FAx.Settings.Templates.Copy")})`;
 
         // Create new duplicate
@@ -153,5 +159,7 @@ export class TemplateActorSettings extends FormApplication {
         CONFIG.FateX.applications.templatePicker.render();
     }
 
-    async _updateObject() {}
+    async _updateObject() {
+        // No update necessary.
+    }
 }

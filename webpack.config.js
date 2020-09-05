@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const globImporter = require("node-sass-glob-importer");
@@ -26,6 +27,9 @@ module.exports = (env) => {
         watch: environment.watch,
         devtool: "inline-source-map",
         stats: "minimal",
+        resolve: {
+            extensions: [".wasm", ".mjs", ".ts", ".js", ".json"],
+        },
         output: {
             filename: "system.js",
             path: path.resolve(__dirname, "dist"),
@@ -58,6 +62,7 @@ module.exports = (env) => {
                     test: /\.[tj]s$/,
                     use: [
                         "ts-loader",
+                        "eslint-loader",
                         "webpack-import-glob-loader",
                         {
                             loader: "string-replace-loader",

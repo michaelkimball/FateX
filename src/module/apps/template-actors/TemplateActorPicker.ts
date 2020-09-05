@@ -6,6 +6,10 @@ export class TemplateActorPicker extends TemplateActorSettings {
     static get defaultOptions() {
         const options = super.defaultOptions;
 
+        if (!options.classes) {
+            options.classes = [];
+        }
+
         mergeObject(options, {
             title: game.i18n.localize("ACTOR.Create"),
             template: "/systems/fatex/templates/apps/template-actors-picker.html",
@@ -24,7 +28,7 @@ export class TemplateActorPicker extends TemplateActorSettings {
 
         html.find(".fatex__template__choose").click((e) => this._chooseTemplate.call(this, e));
         html.find(".fatex__template__empty").click((e) => this._emptyTemplate.call(this, e));
-        html.find(".fatex__template__header__settings").click((e) => this._openSettings.call(this, e));
+        html.find(".fatex__template__header__settings").click(() => this._openSettings.call(this));
     }
 
     /*************************
@@ -48,7 +52,7 @@ export class TemplateActorPicker extends TemplateActorSettings {
         const newActor = await ActorFate._create(data, { renderSheet: true });
 
         // Open sheet setup by default for new empty actors
-        const sheetSetup = new SheetSetup(newActor);
+        const sheetSetup = new SheetSetup(newActor, {});
         sheetSetup.render(true);
 
         await this.close();
@@ -62,11 +66,17 @@ export class TemplateActorPicker extends TemplateActorSettings {
         const template = duplicate(game.actors.get(data.template));
 
         // Add current template as a flag for later use
+        //@ts-ignore
         template.flags.fatex.templateActor = template._id;
 
         // Delete id, specific flags and the actors image
+        //@ts-ignore
         delete template._id;
+
+        //@ts-ignore
         delete template.flags.fatex.isTemplateActor;
+
+        //@ts-ignore
         delete template.img;
 
         // Create the real actor
@@ -74,5 +84,7 @@ export class TemplateActorPicker extends TemplateActorSettings {
         await this.close();
     }
 
-    async _updateObject() {}
+    async _updateObject() {
+        // No update necessary
+    }
 }

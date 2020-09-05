@@ -87,7 +87,8 @@
             "templates": [
                 "base"
             ],
-            "shortDescription": ""
+            "shortDescription": "",
+            "collapsed": false
         }
     }
 }

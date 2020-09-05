@@ -37,7 +37,7 @@ export class Radio extends BaseComponent {
         const sheetEntity = sheet.entity;
 
         // Sane default
-        let value = "";
+        let value: number | string = "";
 
         // Check for numbers as only strings are passed in datasets
         if (dataset.dtype === "Number") {

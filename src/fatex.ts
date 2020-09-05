@@ -43,7 +43,9 @@ Hooks.once("init", async () => {
 
     // Initialise config
     CONFIG.FateX = FateX;
-    CONFIG.Actor.entityClass = ActorFate as any;
+
+    //@ts-ignore
+    CONFIG.Actor.entityClass = ActorFate;
     CONFIG.Item.entityClass = ItemFate;
 
     CONFIG.FateX.global.useMarkdown = !![...game.modules.values()].filter((module) => {

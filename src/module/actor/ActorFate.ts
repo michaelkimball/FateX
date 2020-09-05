@@ -52,7 +52,7 @@ export class ActorFate extends Actor {
     render(force = false, options = {}) {
         super.render(force, options);
 
-        for (let app in CONFIG.FateX.applications) {
+        for (const app in CONFIG.FateX.applications) {
             CONFIG.FateX.applications[app].render();
         }
     }
@@ -78,9 +78,9 @@ export class ActorFate extends Actor {
     }
 
     async roll(name, modifier){
-        let item = this.items.filter(item => item.data.name === name)[0];
-        let itemType = item.type;
-        const rollable = CONFIG.FateX.itemTypes[itemType].prepareItemData(duplicate(item), item);
+        const item = this.items.filter(item => item.data.name === name)[0];
+        const itemType = item.type;
+        const rollable = CONFIG.FateX.itemClasses[itemType].prepareItemData(duplicate(item), item);
         const template = `systems/fatex/templates/chat/roll-${itemType}.html`;
         const rank = parseInt(rollable.data.rank) || 0;
         let roll;
@@ -90,22 +90,20 @@ export class ActorFate extends Actor {
             roll = new Roll("4dF").roll();
         }
         game.dice3d.showForRoll(roll);
-        const dice = CONFIG.FateX.itemTypes[itemType].getDice(roll);
-        const total = CONFIG.FateX.itemTypes[itemType].getTotalString(roll.total + rank);
-        const ladder = CONFIG.FateX.itemTypes[itemType].getLadderLabel(roll.total + rank);
+        const dice = CONFIG.FateX.itemClasses[itemType].getDice(roll);
+        const total = CONFIG.FateX.itemClasses[itemType].getTotalString(roll.total + rank);
+        const ladder = CONFIG.FateX.itemClasses[itemType].getLadderLabel(roll.total + rank);
 
-        let templateData = { rank: (rank + modifier), dice, total, ladder };
-        templateData[itemType] = rollable;
-
-        let chatData = {
+        const templateData = { rank: (rank + modifier), dice, total, ladder, [itemType]: rollable };
+        const chatData = {
             user: game.user._id,
-            speaker: ChatMessage.getSpeaker({ actor: this }),
+            speaker: ChatMessage.getSpeaker({ actor: this as unknown as Actor}),
             sound: CONFIG.sounds.dice,
             flags: {
                 templateVariables: templateData,
             },
+            content: {},
         };
-
         chatData.content = await renderTemplate(template, templateData);
         await ChatMessage.create(chatData);
     }
@@ -114,7 +112,9 @@ export class ActorFate extends Actor {
      * Re-prepare the data for all owned items when owned items are deleted.
      * This ensures, that items that reference the deleted item get updated.
      */
+    //@ts-ignore
     _onModifyEmbeddedEntity(embeddedName, changes, options, userId, context = {}) {
+        //@ts-ignore
         super._onModifyEmbeddedEntity(embeddedName, changes, options, userId, context);
 
         if (embeddedName === "OwnedItem") {

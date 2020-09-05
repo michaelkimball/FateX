@@ -1,81 +1,81 @@
 {
-    "name": "Accelerated",
+    "name": "Acelerado",
     "identifier": "fae",
     "types": {
-        "Aspects": [
+        "Aspectos": [
             {
-                "label": "Basic",
+                "label": "Básico",
                 "entries": [
                     {
-                        "name": "High Concept",
+                        "name": "Concepto principal",
                         "type": "aspect",
                         "data": {
-                            "label": "High Concept"
+                            "label": "Concepto principal"
                         }
                     },
                     {
-                        "name": "Trouble",
+                        "name": "Complicación",
                         "type": "aspect",
                         "data": {
-                            "label": "Trouble"
+                            "label": "Complicación"
                         }
                     },
                     {
-                        "name": "Other aspect",
+                        "name": "Otro aspecto",
                         "type": "aspect",
                         "data": {
-                            "label": "Other"
+                            "label": "Otro"
                         }
                     },
                     {
-                        "name": "Other aspect",
+                        "name": "Otro aspecto",
                         "type": "aspect",
                         "data": {
-                            "label": "Other"
+                            "label": "Otro"
                         }
                     },
                     {
-                        "name": "Other aspect",
+                        "name": "Otro aspecto",
                         "type": "aspect",
                         "data": {
-                            "label": "Other"
+                            "label": "Otro"
                         }
                     }
                 ]
             },
             {
-                "label": "Optional",
+                "label": "Opcional",
                 "entries": [
                     {
-                        "name": "Relationship",
+                        "name": "Relación",
                         "type": "aspect",
                         "data": {
-                            "label": "Relationship"
+                            "label": "Relación"
                         }
                     },
                     {
-                        "name": "Empty Aspect",
+                        "name": "Aspecto vacío",
                         "type": "aspect"
                     }
                 ]
             }
         ],
-        "Consequences": [
+        "Consecuencias": [
             {
                 "entries": [
                     {
-                        "name": "Mild consequence",
+                        "name": "Consecuencia leve",
                         "type": "consequence",
                         "data": {
-                            "label": "Mild",
+                            "label": "Leve",
                             "icon": "2"
                         }
                     },
                     {
-                        "name": "2nd Mild consequence (Skill condition)",
+                        "name": "Segunda consecuencia leve (condición de habilidad)",
                         "type": "consequence",
                         "data": {
-                            "label": "Mild",
+                            "label": "Leve",
                             "icon": "2"
                         },
                         "flags": {
@@ -99,60 +99,60 @@
                         }
                     },
                     {
-                        "name": "Moderate consequence",
+                        "name": "Consecuencia moderada",
                         "type": "consequence",
                         "data": {
-                            "label": "Moderate",
+                            "label": "Moderada",
                             "icon": "4"
                         }
                     },
                     {
-                        "name": "Severe consequence",
+                        "name": "Consecuencia grave",
                         "type": "consequence",
                         "data": {
-                            "label": "Severe",
+                            "label": "Grave",
                             "icon": "6"
                         }
                     }
                 ]
             }
         ],
-        "Skills": [
+        "Habilidades": [
             {
                 "columns": true,
                 "entries": [
                     {
-                        "name": "Careful",
+                        "name": "Cauto",
                         "type": "skill"
                     },
                     {
-                        "name": "Clever",
+                        "name": "Ingenioso",
                         "type": "skill"
                     },
                     {
-                        "name": "Flashy",
+                        "name": "Llamativo",
                         "type": "skill"
                     },
                     {
-                        "name": "Forceful",
+                        "name": "Vigoroso",
                         "type": "skill"
                     },
                     {
-                        "name": "Quick",
+                        "name": "Rápido",
                         "type": "skill"
                     },
                     {
-                        "name": "Sneaky",
+                        "name": "Furtivo",
                         "type": "skill"
                     }
                 ]
             }
         ],
-        "Stress": [
+        "Estrés": [
             {
                 "entries": [
                     {
-                        "name": "Stress",
+                        "name": "Estrés",
                         "type": "stress",
                         "data": {
                             "size": 3,
