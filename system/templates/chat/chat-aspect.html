@@ -1,0 +1,29 @@
+<div class="fatex__aspect">
+    <div class="fatex__aspect__track item">
+        <h2 class="fatex__headline fatex__sortable">
+            <span>{{aspect.name}}</span>
+        </h2>
+
+        {{#ifNotEmpty aspect.description}}
+            <span class="fatex__aspect__track__description">
+                {{aspect.description}}
+            </span>
+        {{/ifNotEmpty}}
+
+        <div class="fatex__aspect__track__items fatex__aspect__track__items__break">
+            {{#each aspect.boxes as |box boxIndex|}}
+                <div class="fatex__aspect__track__item">
+                    <label class="fatex__aspect__track__item__box" data-index="{{boxIndex}}">
+                        <span class="fatex__aspect__track__item__label">{{box.label}}</span>
+                        <input class="fatex__aspect__track__item__checkbox" data-binding="{{box.id}}" type="checkbox" {{#if box.checked}}checked{{/if}}>
+                        <span class="fatex__aspect__track__item__icon"></span>
+                    </label>
+                </div>
+
+                {{#ifNth 4}}
+                    <div class="fatex__aspect__track__break"></div>
+                {{/ifNth}}
+            {{/each}}
+        </div>
+    </div>
+</div>
