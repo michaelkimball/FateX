@@ -11,6 +11,7 @@ import { StressItem } from "./module/item/stress/StressItem";
 import { StuntItem } from "./module/item/stunt/StuntItem";
 import { BaseItem } from "./module/item/BaseItem";
 import { BaseComponent } from "./module/components/BaseComponent";
+import { v4 as uuid } from 'uuid';
 
 export interface FatexConfig {
     itemClasses: {
@@ -37,6 +38,14 @@ export interface FatexConfig {
     global: {
         useMarkdown: boolean;
     };
+
+    utils?: {
+        [key: string]: unknown;
+    },
+    
+    sceneAspects?: {
+        [key: string]: unknown;
+    }
 }
 
 export const FateX: FatexConfig = {
@@ -66,4 +75,52 @@ export const FateX: FatexConfig = {
     global: {
         useMarkdown: false,
     },
+    utils: {
+        newAspect: async (aspect, numBoxes, actor?) => {
+            const template = `systems/fatex/templates/chat/chat-aspect.html`;
+            let boxes: Array<unknown> = [];
+            for(let i = 0; i < numBoxes; i++){
+                boxes = [...boxes, { label: i + 1, checked: false, id: uuid() }];
+            }
+            const sceneAspect = {
+                id: uuid(),
+                ...aspect,
+                boxes,
+            };
+            const templateData = {
+                aspect: sceneAspect
+            };
+            CONFIG.FateX.sceneAspects[sceneAspect.id] = sceneAspect;
+            const chatData = {
+                user: game.user._id,
+                speaker: actor ? ChatMessage.getSpeaker({ actor }) : undefined,
+                sound: CONFIG.sounds.notification,
+                flags: {
+                    templateVariables: templateData,
+                },
+                content: {} as HTMLElement,
+            };
+            chatData.content = await renderTemplate(template, templateData);
+
+            let message = await ChatMessage.create(chatData);
+            const updateBox = (boxId) => {
+                console.log('updateBox', boxId);
+                const listener = document.querySelectorAll(`input[data-binding='${boxId}']`)[0];
+                console.log('listener', listener);
+                listener.addEventListener('change', async () => {
+                    const box = CONFIG.FateX.sceneAspects[sceneAspect.id].boxes.filter((box) => box.id === boxId)[0];
+                    box.checked = !box.checked;
+                    const templateData = { aspect: CONFIG.FateX.sceneAspects[sceneAspect.id] };
+                    const data = { flags: { templateVariables: templateData }, content: await renderTemplate(template, templateData) };
+                    message = await message.update(data);
+                    setTimeout(() => CONFIG.FateX.sceneAspects[sceneAspect.id].boxes.forEach((box) => updateBox(box.id)), 300);
+                });
+            }
+            setTimeout(() => {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                boxes.forEach((listBox: any) => updateBox(listBox.id));
+            }, 100);
+        },
+    },
+    sceneAspects: {},
 };

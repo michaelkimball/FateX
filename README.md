@@ -21,6 +21,18 @@ This allows you to have different base-sheets for PCs, NPCs, monsters, and any o
 
 It's possible to use **different mechanics** for different character types. For example: while PCs may have core-style stress tracks **(1,2,3,4)**, NPCs could have condensed style stress tracks **(1,1,1,1)**. You're fully flexible to play the Fate game **you** want.
 
+## Enabling Chat Aspects
+In foundry installation `/resources/app/dist/database/odm/validators.js` add `'checked'` to the input property array so that the checkbox state doesn't get removed when displaying the aspect.
+
+Utilize a macro to send the aspect into the chat that looks like this:
+```js
+const aspect = {
+  name: 'It\'s a little gassy',
+  description: 'Somebody released some gas and now the whole room is filled with the choking stuff!'
+};
+CONFIG.FateX.utils.newAspect(aspect, 3, actor);
+```
+Note that the actor refers to a the selected token on the scene and is optional. Also, the person who sends the aspect to the chat is the one who can update the aspect.
 
 ## Installation
 **Manifest URL**: https://github.com/anvil-vtt/FateX/releases/latest/download/system.json

@@ -101,6 +101,9 @@ export class SkillItem extends BaseItem {
         const rank = parseInt(skill.data.rank) || 0;
         const actor = sheet.actor;
         const roll = new Roll("4dF").roll();
+        if(game.dice3d) {
+            game.dice3d.showForRoll(roll);
+        }
         const dice = this.getDice(roll);
         const total = this.getTotalString(roll.total + rank);
         const ladder = this.getLadderLabel(roll.total + rank);
