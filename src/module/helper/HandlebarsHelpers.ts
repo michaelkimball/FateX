@@ -65,5 +65,20 @@ export class HandlebarsHelpers {
 
             return value;
         });
+
+        Handlebars.registerHelper("skillAction", function (action) {
+            console.log(action);
+            switch(action){
+                case "overcome":
+                    return "systems/fatex/assets/ui/action/overcome.png";
+                case "advantage":
+                    return "systems/fatex/assets/ui/action/advantage.png";
+                case "attack":
+                    return "systems/fatex/assets/ui/action/attack.png";
+                case "defend":
+                    return "systems/fatex/assets/ui/action/defend.png";
+            }
+            return "";
+        })
     }
 }

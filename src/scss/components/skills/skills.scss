@@ -18,11 +18,17 @@
     break-inside: avoid;
     width: 100%;
     padding: $component-padding $component-padding / 2;
-    cursor: pointer;
     display: inline-block;
 
     .fatex__helper--enable-editmode & {
         cursor: default;
+    }
+}
+
+.fatex__skill__input {
+    &.fatex__headline {
+        clip-path: none;
+        box-shadow: none;
     }
 }
 
@@ -90,3 +96,49 @@
     margin-bottom: 0;
     cursor: pointer;
 }
+
+.fatex__skill__skill_action_group {
+    cursor: pointer;
+}
+
+.fatex__skill__tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.fatex__skill__tooltip .fatex__skill__tooltip--tooltip-text {
+    visibility: hidden;
+    text-transform: none;
+    font-weight: normal;
+    width: 20em;
+    top: -5px;
+    left: 105%;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: .5em;
+  
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.fatex__skill__tooltip:hover .fatex__skill__tooltip--tooltip-text {
+    visibility: visible;
+}
+
+.fatex__skill__tooltip .fatex__skill__tooltip--tooltip-text:hover {
+    visibility: hidden;
+}
+
+.fatex__skill__tooltip .fatex__skill__tooltip--tooltip-text::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the left of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent black transparent transparent
+  }

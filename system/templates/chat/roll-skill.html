@@ -1,9 +1,11 @@
 <div class="fatex__chat">
     <div class="fatex__chat__headline__wrapper">
+        {{#if skill.action}}
+            <img class="fatex__chat__headline__icon--skill" src="{{skillAction skill.action}}" alt="action-type">
+        {{/if}}
         <div class="fatex__chat__headline fatex__headline fatex__headline--icon fatex__headline--center">
             {{ skill.name }}
         </div>
-
         <label class="fatex__chat__headline__icon fatex__headline__icon{{#if skill.data.isNegative}} fatex__chat__headline__icon--negative{{/if}}">
             {{#if skill.data.isPositive}}+{{/if}}{{ rank }}
         </label>

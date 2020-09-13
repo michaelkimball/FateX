@@ -21,6 +21,15 @@
     text-shadow: initial;
 }
 
+.fatex__chat__headline__icon--skill {
+    border-style: none;
+    position: absolute;
+    top: 0;
+    right: 100%;
+    transform: translate(35px, 2px);
+    z-index: 1;
+}
+
 .fatex__chat__headline__icon--negative {
     color: $caution-color;
 }

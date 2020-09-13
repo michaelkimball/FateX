@@ -12,7 +12,10 @@ export class SkillItem extends BaseItem {
         super.activateActorSheetListeners(html, sheet);
 
         // Check or uncheck a single box
-        html.find(".fatex__skill").click((e) => this._onRollSkill.call(this, e, sheet));
+        html.find(".fatex__skill__skill_action_overcome").click((e) => this._onRollSkill.call(this, e, sheet, 'overcome'));
+        html.find(".fatex__skill__skill_action_advantage").click((e) => this._onRollSkill.call(this, e, sheet, 'advantage'));
+        html.find(".fatex__skill__skill_action_attack").click((e) => this._onRollSkill.call(this, e, sheet, 'attack'));
+        html.find(".fatex__skill__skill_action_defend").click((e) => this._onRollSkill.call(this, e, sheet, 'defend'));
         html.find(".fatex__skill__increment").click((e) => this._onSkillChangeRank.call(this, e, sheet, true));
         html.find(".fatex__skill__decrement").click((e) => this._onSkillChangeRank.call(this, e, sheet, false));
     }
@@ -80,7 +83,7 @@ export class SkillItem extends BaseItem {
         }
     }
 
-    static async _onRollSkill(e, sheet) {
+    static async _onRollSkill(e, sheet, skillAction) {
         e.preventDefault();
 
         if (this.isEditMode(e)) {
@@ -89,8 +92,8 @@ export class SkillItem extends BaseItem {
 
         const dataset = e.currentTarget.dataset;
         const skill = sheet.actor.getOwnedItem(dataset.itemId);
-
         if (skill) {
+            skill.data.action = skillAction;
             await this.rollSkill(sheet, skill);
         }
     }
@@ -105,12 +108,13 @@ export class SkillItem extends BaseItem {
             game.dice3d.showForRoll(roll);
         }
         const dice = this.getDice(roll);
+        console.log(dice);
         const total = this.getTotalString(roll.total + rank);
         const ladder = this.getLadderLabel(roll.total + rank);
 
         // Prepare skill item
         const templateData = { skill, rank, dice, total, ladder };
-
+        console.log(templateData);
         const chatData: {
             user: string;
             speaker: unknown;
@@ -137,8 +141,8 @@ export class SkillItem extends BaseItem {
         const rolls = useOldRollApi ? roll.parts[0].rolls : roll.terms[0].results;
 
         return rolls.map((rolledDie) => ({
-            value: rolledDie.roll,
-            face: this.getDieFace(rolledDie.roll),
+            value: rolledDie.result,
+            face: this.getDieFace(rolledDie.result),
         }));
     }
 

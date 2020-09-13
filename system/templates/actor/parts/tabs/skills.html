@@ -15,10 +15,30 @@
 
     <div class="fatex__skills__columns fatex__skills__columns--{{actor._id}}">
         {{#each skills as |skill skillIndex|}}
-            <div class="fatex__skill fatex__input fatex__input--icon fatex__sortable item" data-item-id="{{skill._id}}">
+            <div class="fatex__skill fatex__input fatex__input--icon fatex__sortable item">
 
                 <div class="fatex__skill__actions_wrapper">
-                    <div class="fatex__skill__input fatex__headline">{{skill.name}}</div>
+                    <div class="fatex__skill__input fatex__headline">
+                        {{skill.name}}
+                        <div class="fatex__skill__skill_action_group">
+                            <div class="fatex__skill__tooltip fatex__skill__skill_action_overcome"  data-item-id="{{skill._id}}">
+                                <img src="systems/fatex/assets/ui/action/overcome.png" alt="overcome">
+                                <span class="fatex__skill__tooltip--tooltip-text"><b>Overcome:</b> Get past an obstacle.</span>
+                            </div>
+                            <div class="fatex__skill__tooltip fatex__skill__skill_action_advantage"  data-item-id="{{skill._id}}">
+                                <img src="systems/fatex/assets/ui/action/advantage.png" alt="create an advantage">
+                                <span class="fatex__skill__tooltip--tooltip-text"><b>Create an Advantage:</b> Invoke an aspect for free.</span>
+                            </div>
+                            <div class="fatex__skill__tooltip fatex__skill__skill_action_attack"  data-item-id="{{skill._id}}">
+                                <img src="systems/fatex/assets/ui/action/attack.png" alt="attack">
+                                <span class="fatex__skill__tooltip--tooltip-text"><b>Attack:</b> Harm another character.</span>
+                            </div>
+                            <div class="fatex__skill__tooltip fatex__skill__skill_action_defend"  data-item-id="{{skill._id}}">
+                                <img src="systems/fatex/assets/ui/action/defend.png" alt="defend">
+                                <span class="fatex__skill__tooltip--tooltip-text"><b>Defend:</b> Prevent attacks or advantages on you.</span>
+                            </div>
+                        </div>
+                    </div>
 
                     {{#unless skill.data.isNeutral}}
                         <label
